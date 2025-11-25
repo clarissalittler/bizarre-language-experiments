@@ -23,6 +23,7 @@ module NuPi.Syntax
     -- * Values
   , Value(..)
   , Continuation(..)
+  , ChannelEnd(..)
     -- * Utilities
   , freeVars
   , freeTyVars
@@ -158,6 +159,24 @@ data Value
   | VChan ChanName ChannelEnd     -- ^ Channel endpoint
   | VProc (Continuation Value)    -- ^ Suspended process
   deriving (Show)
+
+-- | Manual Eq instance for Value
+-- Closures and processes compare structurally where possible
+instance Eq Value where
+  VUnit == VUnit = True
+  VInt n == VInt m = n == m
+  VBool b == VBool c = b == c
+  VPair a b == VPair c d = a == c && b == d
+  VTensor a b == VTensor c d = a == c && b == d
+  VClosure n1 t1 e1 == VClosure n2 t2 e2 = n1 == n2 && t1 == t2 && e1 == e2
+  VLinClosure n1 t1 e1 == VLinClosure n2 t2 e2 = n1 == n2 && t1 == t2 && e1 == e2
+  VInj l1 v1 == VInj l2 v2 = l1 == l2 && v1 == v2
+  VRecord fs1 == VRecord fs2 = fs1 == fs2
+  VFold v1 == VFold v2 = v1 == v2
+  VCoiter s1 f1 == VCoiter s2 f2 = s1 == s2 && f1 == f2
+  VChan n1 e1 == VChan n2 e2 = n1 == n2 && e1 == e2
+  VProc _ == VProc _ = False  -- Can't compare continuations
+  _ == _ = False
 
 -- | Which end of a channel
 data ChannelEnd = ChanPos | ChanNeg

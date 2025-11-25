@@ -19,7 +19,7 @@ library
                     , NuPi.Eval
                     , NuPi.Pretty
                     , NuPi.Examples
-    build-depends:    base ^>=4.17.2.1 || ^>=4.18 || ^>=4.19 || ^>=4.20
+    build-depends:    base ^>=4.17 || ^>=4.18 || ^>=4.19 || ^>=4.20
                     , containers >=0.6
                     , mtl >=2.2
                     , transformers >=0.5
@@ -29,7 +29,7 @@ library
 executable nupi
     import:           warnings
     main-is:          Main.hs
-    build-depends:    base ^>=4.17.2.1 || ^>=4.18 || ^>=4.19 || ^>=4.20
+    build-depends:    base ^>=4.17 || ^>=4.18 || ^>=4.19 || ^>=4.20
                     , nupi
     hs-source-dirs:   app
     default-language: Haskell2010
@@ -43,7 +43,7 @@ test-suite nupi-test
     other-modules:    TypeCheckTests
                     , EvalTests
                     , IntegrationTests
-    build-depends:    base ^>=4.17.2.1 || ^>=4.18 || ^>=4.19 || ^>=4.20
+    build-depends:    base ^>=4.17 || ^>=4.18 || ^>=4.19 || ^>=4.20
                     , nupi
                     , HUnit >=1.6
                     , containers >=0.6
