@@ -1,0 +1,49 @@
+cabal-version:      3.0
+name:               nupi
+version:            0.1.0.0
+synopsis:           NuPi - A Unified Language for Coinduction and Communication
+description:        An interpreter for NuPi, a language combining coinductive types,
+                    session-typed channels, and linear types into a unified system.
+license:            MIT
+author:             Claude
+build-type:         Simple
+
+common warnings
+    ghc-options: -Wall
+
+library
+    import:           warnings
+    exposed-modules:  NuPi.Syntax
+                    , NuPi.Types
+                    , NuPi.TypeCheck
+                    , NuPi.Eval
+                    , NuPi.Pretty
+                    , NuPi.Examples
+    build-depends:    base ^>=4.17.2.1 || ^>=4.18 || ^>=4.19 || ^>=4.20
+                    , containers >=0.6
+                    , mtl >=2.2
+                    , transformers >=0.5
+    hs-source-dirs:   src
+    default-language: Haskell2010
+
+executable nupi
+    import:           warnings
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.1 || ^>=4.18 || ^>=4.19 || ^>=4.20
+                    , nupi
+    hs-source-dirs:   app
+    default-language: Haskell2010
+
+test-suite nupi-test
+    import:           warnings
+    default-language: Haskell2010
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Main.hs
+    other-modules:    TypeCheckTests
+                    , EvalTests
+                    , IntegrationTests
+    build-depends:    base ^>=4.17.2.1 || ^>=4.18 || ^>=4.19 || ^>=4.20
+                    , nupi
+                    , HUnit >=1.6
+                    , containers >=0.6
